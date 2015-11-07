@@ -1,0 +1,11 @@
+{#test}
+{!-- Chunk can grab templates right from the classpath on
+  -- the enterprise, but in Android things are a bit different.
+  --
+  -- Place templates in assets/themes/*.chtml and use
+  -- com.x5.template.provider.AndroidTemplates to load
+  -- them from there into your Theme.  v2.4 and up.
+  --
+  --}
+See Java tab for example code.
+{#}
