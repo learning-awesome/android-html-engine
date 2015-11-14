@@ -8,4 +8,91 @@
   --
   --}
 See Java tab for example code.
+
+<ul>
+
+ {% loop in $list as $item %}
+  <li>{$item}</li>
+ {% endloop %}
+
+</ul>
+
+
+{% loop in $mapList as $w %}
+  <div class="widget">
+    {$w.name}
+    {$w.age}
+  </div>
+{% onEmpty %}
+<div><i>No list found!</i></div>
+{% endloop %}
+
+
+<ul>
+ <li> {$obj.name}</li>
+ <li> {$obj.rank}</li>
+ <li> {$obj.serial}</li>
+ <li> {% if ($obj.is_active) %}Active duty{% else %}Retired{% endif %}</li>
+ <li> Superior: {$obj.boss.name}</li>
+ <li> Pi to two places is {% $obj.pi|sprintf(%.2f) %}</li>
+</ul>
+
+
+{!--
+  -- Similar template-binding is available for java beans.
+  --
+  -- Just use chunk.setToBean("tag", myBean) instead of chunk.set(x,y)
+  --
+  -- Standard accessors like getFullName() are exposed in the template
+  -- as {$tag.full_name} - camelCase converts to lower_with_underscores
+  --
+  -- Boolean properties with accessors like isActive() appear in the
+  -- template as {$tag.is_active} but only when true, w/value "TRUE"
+  --
+  -- Primitives are converted to Strings.
+  --
+  -- Arrays and Lists are converted to LIST types that can be looped in.
+  --
+  -- Nested objects are assumed to be beans as well.
+  --}
+
+<ul>
+ <li> {$bean.name|upper}</li>
+ <li> {$bean.rank|lower}</li>
+ <li> {$bean.serial}</li>
+ <li> {% if ($bean.is_active) %}Active duty{% else %}Retired{% endif %}</li>
+ <li> Superior: {$bean.boss.name}</li>
+ <li> Pi to two places is {% $bean.pi|sprintf(%.2f) %}</li>
+</ul>
+
+
+{!-- Some handy sprintf examples, in case your sprintf is rusty.
+  -- Number casting to longs/floats is automatic.
+  --}
+{$x:3.555559|sprintf(%.3f)} Three decimal places (float)<br/>
+{$x:3|sprintf(%05d)} Zero-pad five places (integer)<br/>
+{$x:3|sprintf(%-5d)} Left-justify, field-length 5 (int)<br/>
+{$x:3000000|sprintf(%,d)} Add thousands separators (integer)<br/>
+{$x:-3.99|sprintf(%d)} {$y:3.99|sprintf(%d)} Truncate to integer<br/>
+{$x:-3.5|sprintf(%.0f)} {$y:3.5|sprintf(%.0f)} Round to integer<br/>
+{$x:0.000031415|sprintf(%.3e)} scientific notation<br/>
+
+{$x:255|sprintf(%x)} lowercase hexadecimal<br/>
+{$x:255|sprintf(%X)} uppercase hexadecimal<br/>
+{$x:255|sprintf(%o)} octal<br/>
+"{$x:65|sprintf(%c)}" ascii character<br/>
+
+{$x:banana|sprintf(Throw the %s)}! Text may come before the format expr...<br/>
+{$x:banana|sprintf(Throw the %s!)} ...but never after.<br/>
+
+{$x:0xFF|sprintf(%d)} hex in, decimal out<br/>
+0x{$x:128|sprintf(%X)} decimal in, hex out<br/>
+{$x:#00FF00|sprintf(#%06x)} HEX in (rgb #triple), hex out<br/>
+
+<p>%N.Ms min/max size of %s string output (truncate/pad to fit)</p>
+<pre>
+{$x:Swiss Army Knife|sprintf(%10.10s)} truncate
+{$x:Cloak|sprintf(%-10.10s)} pad to fit, left-justify
+{$x:Dagger|sprintf(%10.10s)} pad to fit, standard right-justify
+</pre>
 {#}
